@@ -9,14 +9,14 @@ namespace AuthService.Models
 
         [Required]
         [MaxLength(100)]
-        public string PasswordHash { get; set; }
+        public string Password { get; set; } // hash by BCrypt
 
         [EmailAddress]
         [MaxLength (100)]
-        public string? EmailAddress { get; set; } = null;
+        public string? Email { get; set; } = null;
 
         [Required]
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
         public DateTime? UpdateDate { get; set; } = null;
         public bool IsActive { get; set; } = true;
         public bool IsDeleted { get; set; } = false;

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using AuthService.Data;
+using AuthService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,10 @@ builder.Services.AddDbContext<AuthServiceDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<UserPasswordService>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // auto use all mapping profiles, that enherited from Profile class
 
 var app = builder.Build();
 
