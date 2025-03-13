@@ -1,4 +1,5 @@
 ﻿using AuthService.Data;
+using AuthService.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthService.Services
@@ -15,6 +16,11 @@ namespace AuthService.Services
         public async Task<bool> IsEmailTakenAsync(string email)
         {
             return await _context.Users.AnyAsync(u => u.Email == email && !u.IsDeleted);
+        }
+
+        public async Task<User?> GetUserByUsernameAsync(string username)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
     }
 }
