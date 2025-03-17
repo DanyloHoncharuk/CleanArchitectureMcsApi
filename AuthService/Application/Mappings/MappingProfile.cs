@@ -1,9 +1,9 @@
-﻿using AuthService.DTO;
-using AuthService.Models;
-using AuthService.Services;
+﻿using AuthService.Application.DTOs;
+using AuthService.Application.Services;
+using AuthService.Domain.Models;
 using AutoMapper;
 
-namespace AuthService.Mappings
+namespace AuthService.Application.Mappings
 {
     public class MappingProfile : Profile
     {

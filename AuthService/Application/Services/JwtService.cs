@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace AuthService.Services
+namespace AuthService.Application.Services
 {
     public class JwtService
     {

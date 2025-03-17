@@ -1,8 +1,8 @@
-﻿using AuthService.Data;
-using AuthService.Models;
+﻿using AuthService.Domain.Models;
+using AuthService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuthService.Services
+namespace AuthService.Application.Services
 {
     public class UserService(AuthServiceDbContext context)
     {

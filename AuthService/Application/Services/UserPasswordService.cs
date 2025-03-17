@@ -1,4 +1,4 @@
-﻿namespace AuthService.Services
+﻿namespace AuthService.Application.Services
 {
     public class UserPasswordService
     {

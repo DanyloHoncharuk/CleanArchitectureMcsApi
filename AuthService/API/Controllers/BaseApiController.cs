@@ -1,7 +1,7 @@
-﻿using AuthService.Data;
+﻿using AuthService.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuthService.Controllers
+namespace AuthService.API.Controllers
 {
     [ApiController]
     [Route("api/Auth/[controller]")]

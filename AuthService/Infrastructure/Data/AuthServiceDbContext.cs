@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using AuthService.Models;
+using AuthService.Domain.Models;
 
-namespace AuthService.Data
+namespace AuthService.Infrastructure.Data
 {
     public class AuthServiceDbContext(DbContextOptions<AuthServiceDbContext> options) : DbContext(options)
     {
@@ -9,7 +9,7 @@ namespace AuthService.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); 
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
