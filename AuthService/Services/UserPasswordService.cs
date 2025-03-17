@@ -1,6 +1,4 @@
-﻿using AuthService.Data;
-
-namespace AuthService.Services
+﻿namespace AuthService.Services
 {
     public class UserPasswordService
     {
