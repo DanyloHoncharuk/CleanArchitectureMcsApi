@@ -1,25 +1,46 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AuthService.Domain.Common;
+﻿using AuthService.Domain.Common;
 
 namespace AuthService.Domain.Entities
 {
     public class User : BaseSoftDeletableEntity
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public string Username { get; private set; }
+        public string PasswordHash { get; private set; }
+        public string? Email { get; private set; } = null;
 
-        [Required]
-        [MaxLength(100)]
-        public string Username { get; set; } = string.Empty;
+        public bool IsActive { get; private set; } = true;
 
-        [Required]
-        [MaxLength(255)]
-        public string PasswordHash { get; set; } = string.Empty;
+        private User() { } // for EF
 
-        [EmailAddress]
-        [MaxLength(100)]
-        public string? Email { get; set; } = null;
+        public User(string username, string password, string? email)
+        {
+            if (string.IsNullOrWhiteSpace(username) || username.Length > 100)
+                throw new ArgumentException("Username cannot be empty or exceed 100 characters");
 
-        public bool IsActive { get; set; } = true;
+            if (!string.IsNullOrEmpty(email) && email.Length > 100)
+                throw new ArgumentException("Email cannot exceed 100 characters");
+
+            Username = username;
+            Email = email;
+            SetPassword(password);
+        }
+
+        public void SetPassword(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Password cannot be empty");
+
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        public bool VerifyPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, PasswordHash);
+        }
+
+        public void Deactivate() => IsActive = false;
+
+        public void Activate() => IsActive = true;
     }
 }

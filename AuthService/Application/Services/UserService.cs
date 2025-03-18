@@ -1,9 +1,8 @@
 ﻿using AuthService.Domain.Entities;
 using AuthService.Application.Interfaces;
 using AutoMapper;
-using AuthService.Infrastructure.Interfaces.Repositories;
 using AuthService.Application.DTOs;
-using AuthService.Application.Models;
+using AuthService.Application.Common;
 
 namespace AuthService.Application.Services
 {
@@ -14,17 +13,17 @@ namespace AuthService.Application.Services
 
         public async Task<User?> GetUserByUsernameAsync(string username)
         {
-            return await _userRepository.GetUserByUsernameAsync(username);
+            return await _userRepository.GetByUsernameAsync(username);
         }
 
         public async Task<bool> IsUsernameTakenAsync(string username)
         {
-            return await _userRepository.GetUserByUsernameAsync(username) != null;
+            return await _userRepository.GetByUsernameAsync(username) != null;
         }
 
         public async Task<bool> IsEmailTakenAsync(string email)
         {
-            return await _userRepository.GetUserByEmailAsync(email) != null;
+            return await _userRepository.GetByEmailAsync(email) != null;
         }
 
         public async Task<OperationResult> CreateUserAsync(CreateUserDto createUserDto)
@@ -40,7 +39,7 @@ namespace AuthService.Application.Services
             }
 
             var user = _mapper.Map<User>(createUserDto);
-            await _userRepository.AddUserAsync(user);
+            await _userRepository.AddAsync(user);
 
             return new OperationResult { Success = true, Message = "User created successfully." };
         }

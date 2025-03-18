@@ -1,7 +1,6 @@
 ﻿using AuthService.Application.DTOs;
-using AuthService.Application.Models;
+using AuthService.Application.Common;
 using AuthService.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.Application.Interfaces
 {
