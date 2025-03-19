@@ -6,9 +6,10 @@ using AuthService.Application.Common;
 
 namespace AuthService.Application.Services
 {
-    public class UserService(IUserRepository userRepository, IMapper mapper) : IUserService
+    public class UserService(IUserRepository userRepository, IDbContextTransactionManager dbContextTransactionManager, IMapper mapper) : IUserService
     {
         private readonly IUserRepository _userRepository = userRepository;
+        private readonly IDbContextTransactionManager _dbContextTransactionManager = dbContextTransactionManager;
         private readonly IMapper _mapper = mapper;
 
         public async Task<User?> GetUserByUsernameAsync(string username)
@@ -39,7 +40,8 @@ namespace AuthService.Application.Services
             }
 
             var user = _mapper.Map<User>(createUserDto);
-            await _userRepository.AddAsync(user);
+            userRepository.Add(user);
+            await _dbContextTransactionManager.SaveChangesAsync();
 
             return new OperationResult { Success = true, Message = "User created successfully." };
         }

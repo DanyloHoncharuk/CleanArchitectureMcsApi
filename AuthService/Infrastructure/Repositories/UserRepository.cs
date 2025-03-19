@@ -1,8 +1,6 @@
 ﻿using AuthService.Domain.Entities;
 using AuthService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using AuthService.Application.DTOs;
-using Microsoft.AspNetCore.Mvc;
 using AuthService.Application.Interfaces;
 
 namespace AuthService.Infrastructure.Repositories
@@ -21,10 +19,9 @@ namespace AuthService.Infrastructure.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public async Task AddAsync(User user)
+        public void  Add(User user)
         {
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
         }
     }
 }
