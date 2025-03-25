@@ -1,5 +1,4 @@
-﻿using AuthService.Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.API.Controllers
 {

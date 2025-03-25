@@ -1,6 +1,5 @@
 ﻿using AuthService.Application.DTOs;
-using AuthService.Application.Services;
-using AuthService.Domain.Models;
+using AuthService.Domain.Entities;
 using AutoMapper;
 
 namespace AuthService.Application.Mappings
@@ -9,8 +8,7 @@ namespace AuthService.Application.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<CreateUserDto, User>()
-                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => UserPasswordService.HashPassword(src.Password)));
+            CreateMap<CreateUserDto, User>();
         }
     }
 }

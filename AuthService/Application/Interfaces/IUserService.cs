@@ -10,5 +10,6 @@ namespace AuthService.Application.Interfaces
         Task<bool> IsUsernameTakenAsync(string username);
         Task<bool> IsEmailTakenAsync(string email);
         Task<OperationResult> CreateUserAsync(CreateUserDto createUserDto);
+        Task<OperationResult> AuthenticateUserAsync(AuthenticateUserDto authenticateUserDto);
     }
 }
