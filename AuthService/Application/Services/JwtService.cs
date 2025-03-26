@@ -1,11 +1,12 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using AuthService.Application.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace AuthService.Services
+namespace AuthService.Application.Services
 {
-    public class JwtService
+    public class JwtService : IJwtService
     {
         private readonly string _key;
         private readonly string _issuer;
@@ -20,14 +21,14 @@ namespace AuthService.Services
             _expireMinutes = int.Parse(config["JwtSettings:ExpireMinutes"]);
         }
 
-        public string GenerateToken(string username)
+        public string GenerateJwt(string username)
         {
             var claims = new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub, username),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.Name, username)
-        };
+                new Claim(JwtRegisteredClaimNames.Sub, username),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Name, username)
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
