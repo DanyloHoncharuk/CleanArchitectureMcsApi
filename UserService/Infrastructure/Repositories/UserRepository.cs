@@ -31,7 +31,7 @@ namespace UserService.Infrastructure.Repositories
 
             var users = await query
                 .Skip(Int32.Parse(parameters["skip"]))
-                .Take(Int32.Parse(parameters["limit"]))
+                .Take(Int32.Parse(parameters["take"]))
                 .ToListAsync();
 
             return users;
