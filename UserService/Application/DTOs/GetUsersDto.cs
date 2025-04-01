@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace UserService.Application.DTOs
 {
-    public class GetUsersQueryDto
+    public class GetUsersDto
     {
-        [MinLength(3, ErrorMessage = "Search must contain 3 or more characters")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Search must contain from 3 to 50 characters")]
         public string? Search {  get; set; }
 
         [DefaultValue(0)]

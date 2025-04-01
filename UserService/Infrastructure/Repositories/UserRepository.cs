@@ -10,9 +10,9 @@ namespace UserService.Infrastructure.Repositories
     {
         private readonly UserServiceDbContext _context = context;
 
-        public async Task<User?> GetUserByLoginAsync(string login)
+        public async Task<User?> GetUserByIdAsync(Guid id)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Login == login);
+            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<User>?> GetUsersAsync(Dictionary<string, string> parameters)
@@ -24,6 +24,7 @@ namespace UserService.Infrastructure.Repositories
                 var serachValue = $"%{parameters["search"]}%";
 
                 query = query.Where(u => 
+                    EF.Functions.Like(u.Login, serachValue) ||
                     EF.Functions.Like(u.Name, serachValue) ||
                     EF.Functions.Like(u.Surname, serachValue)
                     );
@@ -37,9 +38,9 @@ namespace UserService.Infrastructure.Repositories
             return users;
         }
 
-        public void AddUser(User useer)
+        public void AddUser(User user)
         {
-            _context.Users.Add(useer);
+            _context.Users.Add(user);
         }
 
         public void UpdateUser(User user)

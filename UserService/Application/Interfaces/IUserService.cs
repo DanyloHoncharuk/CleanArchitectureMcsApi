@@ -5,6 +5,8 @@ namespace UserService.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<OperationResult> GetUsers(GetUsersQueryDto getUsersQueryDto);
+        Task<OperationResult> GetUsersAsync(GetUsersDto getUsersQueryDto);
+        Task<OperationResult> GetUserByIdAsync(string id);
+        Task<OperationResult> CreateUserAsync(CreateUserDto createUserDto);
     }
 }

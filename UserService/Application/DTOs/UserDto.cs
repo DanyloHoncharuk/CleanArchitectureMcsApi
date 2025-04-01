@@ -9,6 +9,10 @@
         public string Name { get; set; }
         public string Surname { get; set; }
         public string DateOfBirth { get; set; }
+        public string CreationDate { get; set; }
+        public string UpdateDate { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
+
     }
 }

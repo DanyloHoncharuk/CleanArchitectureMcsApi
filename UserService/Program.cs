@@ -10,7 +10,8 @@ builder.Services.AddDbContext<UserServiceDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserService, UserService.Application.Services.UserService>();
+builder.Services.AddScoped<IDbContextTransactionManager, DbContextTransactionManager>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // auto use all mapping profiles, that enherited from Profile class
 
