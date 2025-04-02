@@ -17,8 +17,10 @@ namespace UserService.Application.Mappings
                     src.UpdateDate.HasValue ? src.UpdateDate.Value.ToString(DateFormats.DateTimeWithMilliseconds) : null));
 
             CreateMap<CreateUserDto, User>()
-                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => DateTime.Parse(src.DateOfBirth)))
-                .AfterMap((src, dest) => dest.SetPassword(src.Password));
+                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => DateTime.Parse(src.DateOfBirth)));
+
+            CreateMap<UpdateUserDto, User>()
+                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
         }
 
     }

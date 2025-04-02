@@ -40,6 +40,7 @@ namespace UserService.Application.Services
         public async Task<OperationResult> CreateUserAsync(CreateUserDto createUserDto)
         {
             var user = _mapper.Map<User>(createUserDto);
+            user.SetPassword(createUserDto.Password);
 
             _userRepository.AddUser(user);
             await _dbContextTransactionManager.SaveChangesAsync();
@@ -49,6 +50,62 @@ namespace UserService.Application.Services
                 Success = true, 
                 Message = "User was created succesfuly", 
                 Data = _mapper.Map<UserDto>(user) 
+            };
+        }
+
+        public async Task<OperationResult> UpdateUserAsync(string id, UpdateUserDto updateUserDto)
+        {
+            var user = await _userRepository.GetUserByIdAsync(Guid.Parse(id));
+            
+            if(user != null)
+            {
+                _mapper.Map(updateUserDto, user);
+                user.Update();
+
+                _userRepository.UpdateUser(user);
+                await _dbContextTransactionManager.SaveChangesAsync();
+
+                return new OperationResult
+                {
+                    Success = true,
+                    Message = "User was updated succesfuly",
+                    Data = _mapper.Map<UserDto>(user)
+                };
+            }
+
+            return new OperationResult
+            {
+                Success = false,
+                Message = $"User {id} not found",
+                Data = null
+            };
+        }
+
+        public async Task<OperationResult> DeleteUserAsync(string id)
+        {
+            var user = await _userRepository.GetUserByIdAsync(Guid.Parse(id));
+
+            if(user != null)
+            {
+                user.MarkAsDeleted();
+                user.Update();
+
+                _userRepository.UpdateUser(user);
+                await _dbContextTransactionManager.SaveChangesAsync();
+
+                return new OperationResult
+                {
+                    Success = true,
+                    Message = "User was deleted succesfuly",
+                    Data = null
+                };
+            }
+
+            return new OperationResult
+            {
+                Success = false,
+                Message = $"User {id} not found",
+                Data = null
             };
         }
     }

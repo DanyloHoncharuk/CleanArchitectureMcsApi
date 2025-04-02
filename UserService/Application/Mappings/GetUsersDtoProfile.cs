@@ -10,7 +10,7 @@ namespace UserService.Application.Mappings
             CreateMap<GetUsersDto, Dictionary<string, string>>()
                 .AfterMap((src, dest) =>
                 {
-                    dest["search"] = (!string.IsNullOrEmpty(src.Search)).ToString();
+                    dest["search"] = !string.IsNullOrEmpty(src.Search) ? src.Search : "";
                     dest["skip"] = src.Skip.ToString();
                     dest["take"] = src.Take.ToString();
                 });
