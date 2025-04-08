@@ -13,7 +13,7 @@ namespace UserService.API.Controllers
         {
             var result = await _userService.GetUsersAsync(getUsersDto);
 
-            return result.Success ? Ok(result) : BadRequest();
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("{id}")]
@@ -21,7 +21,7 @@ namespace UserService.API.Controllers
         {
             var result = await _userService.GetUserByIdAsync(id);
 
-            return result.Success ? Ok(result) : BadRequest();
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost]
@@ -29,7 +29,7 @@ namespace UserService.API.Controllers
         {
             var result = await _userService.CreateUserAsync(createUserDto);
 
-            return result.Success ? Ok(result) : BadRequest();
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPatch("{id}")]
@@ -37,7 +37,7 @@ namespace UserService.API.Controllers
         {
             var result = await _userService.UpdateUserAsync(id, updateUserDto);
 
-            return result.Success ? Ok(result) : BadRequest();
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpDelete("{id}")]
@@ -45,7 +45,7 @@ namespace UserService.API.Controllers
         {
             var result = await _userService.DeleteUserAsync(id);
 
-            return result.Success ? Ok(result) : BadRequest();
+            return result.Success ? Ok(result) : BadRequest(result);
         }
     }
 }

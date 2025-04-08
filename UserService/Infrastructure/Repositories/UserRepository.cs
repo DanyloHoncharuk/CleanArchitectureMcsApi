@@ -12,7 +12,22 @@ namespace UserService.Infrastructure.Repositories
 
         public async Task<User?> GetUserByIdAsync(Guid id)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task<User?> GetUserByLoginAsync(string login)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Login == login);
+        }
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<User?> GetUserByPhoneNumberAsync(string phoneNumber)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
         }
 
         public async Task<IEnumerable<User>?> GetUsersAsync(Dictionary<string, string> parameters)
@@ -31,6 +46,7 @@ namespace UserService.Infrastructure.Repositories
             }
 
             var users = await query
+                .Where(u => !u.IsDeleted)
                 .Skip(Int32.Parse(parameters["skip"]))
                 .Take(Int32.Parse(parameters["take"]))
                 .ToListAsync();
