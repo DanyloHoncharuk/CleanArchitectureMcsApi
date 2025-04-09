@@ -1,4 +1,5 @@
 ﻿using UserService.Application.Wrappers;
+using UserService.Common;
 
 namespace UserService.Application.Common
 {
@@ -9,11 +10,15 @@ namespace UserService.Application.Common
             try
             {
                 var result = await action();
-                return OperationResult<T>.Ok(result, successMessage);
+                return OperationResult<T>.SuccessResult(result, successMessage);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return OperationResult<T>.Fail($"{ex.Message}");
+                return OperationResult<T>.Failture(ex.Message, ErrorCodes.Validation);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return OperationResult<T>.Failture(ex.Message, ErrorCodes.NotFound);
             }
         }
 
@@ -22,11 +27,15 @@ namespace UserService.Application.Common
             try
             {
                 await action();
-                return OperationResult<object?>.Ok(null, successMessage);
+                return OperationResult<object?>.SuccessResult(null, successMessage);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return OperationResult<object?>.Fail($"{ex.Message}");
+                return OperationResult<object?>.Failture(ex.Message, ErrorCodes.Validation);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return OperationResult<object?>.Failture(ex.Message, ErrorCodes.NotFound);
             }
         }
     }

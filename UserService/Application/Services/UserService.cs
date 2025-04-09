@@ -26,7 +26,7 @@ namespace UserService.Application.Services
             });
         }
 
-        public async Task<OperationResult<UserDto?>> GetUserByIdAsync(string id)
+        public async Task<OperationResult<UserDto>> GetUserByIdAsync(string id)
         {
             return await HandleRequestAsync(async () =>
             {
@@ -34,7 +34,10 @@ namespace UserService.Application.Services
                     throw new ArgumentException("Invalid ID format");
 
                 var user = await _userRepository.GetUserByIdAsync(guid);
-                return user is null ? null : _mapper.Map<UserDto>(user);
+                if (user == null)
+                    throw new KeyNotFoundException($"User with ID {id} not found");
+
+                return _mapper.Map<UserDto>(user);
             });
         }
 
@@ -62,7 +65,7 @@ namespace UserService.Application.Services
                     throw new ArgumentException("Invalid ID format");
 
                 var user = await _userRepository.GetUserByIdAsync(guid);
-                if (user is null)
+                if (user == null)
                     throw new KeyNotFoundException($"User with ID {id} not found");
 
                 await ValidateUserUniquenessAsync(null, updateUserDto.Email, updateUserDto.PhoneNumber, guid);
@@ -85,7 +88,7 @@ namespace UserService.Application.Services
                     throw new ArgumentException("Invalid ID format");
 
                 var user = await _userRepository.GetUserByIdAsync(guid);
-                if (user is null)
+                if (user == null)
                     throw new KeyNotFoundException($"User with ID {id} not found");
 
                 user.MarkAsDeleted();

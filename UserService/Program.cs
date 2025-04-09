@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using UserService.API.Middlewares;
 using UserService.Application.Interfaces;
 using UserService.Infrastructure.Data;
 using UserService.Infrastructure.Repositories;
-using UserService.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +28,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 
