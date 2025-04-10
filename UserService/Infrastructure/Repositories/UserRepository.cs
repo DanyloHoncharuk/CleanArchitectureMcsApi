@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UserService.Application.Interfaces;
+using UserService.Common;
 using UserService.Domain.Entities;
 using UserService.Infrastructure.Data;
 
@@ -30,13 +31,13 @@ namespace UserService.Infrastructure.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
         }
 
-        public async Task<IEnumerable<User>?> GetUsersAsync(Dictionary<string, string> parameters)
+        public async Task<List<User>?> GetUsersAsync(Dictionary<string, string> parameters) // List or IEnumerable ???
         {
             var query = _context.Users.AsQueryable();
 
-            if (!parameters["search"].IsNullOrEmpty())
+            if (!parameters[GetUsersQueryParameters.Search].IsNullOrEmpty())
             {
-                var serachValue = $"%{parameters["search"]}%";
+                var serachValue = $"%{parameters[GetUsersQueryParameters.Search]}%";
 
                 query = query.Where(u => 
                     EF.Functions.Like(u.Login, serachValue) ||
@@ -47,8 +48,8 @@ namespace UserService.Infrastructure.Repositories
 
             var users = await query
                 .Where(u => !u.IsDeleted)
-                .Skip(Int32.Parse(parameters["skip"]))
-                .Take(Int32.Parse(parameters["take"]))
+                .Skip(Int32.Parse(parameters[$"{GetUsersQueryParameters.Skip}"]))
+                .Take(Int32.Parse(parameters[$"{GetUsersQueryParameters.Take}"]))
                 .ToListAsync();
 
             return users;

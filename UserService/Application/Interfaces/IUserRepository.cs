@@ -8,7 +8,7 @@ namespace UserService.Application.Interfaces
         Task<User?> GetUserByLoginAsync(string login);
         Task<User?> GetUserByEmailAsync(string email);
         Task<User?> GetUserByPhoneNumberAsync(string phoneNumber);
-        Task<IEnumerable<User>?> GetUsersAsync(Dictionary<string, string> parameters);
+        Task<List<User>?> GetUsersAsync(Dictionary<string, string> parameters);
         void AddUser(User user);
         void UpdateUser(User user);
     }

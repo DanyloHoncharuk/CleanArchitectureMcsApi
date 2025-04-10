@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using UserService.Application.DTOs;
+using UserService.Common;
 
 namespace UserService.Application.Mappings
 {
@@ -10,9 +11,9 @@ namespace UserService.Application.Mappings
             CreateMap<GetUsersDto, Dictionary<string, string>>()
                 .AfterMap((src, dest) =>
                 {
-                    dest["search"] = !string.IsNullOrEmpty(src.Search) ? src.Search : "";
-                    dest["skip"] = src.Skip.ToString();
-                    dest["take"] = src.Take.ToString();
+                    dest[GetUsersQueryParameters.Search] = !string.IsNullOrEmpty(src.Search) ? src.Search : "";
+                    dest[GetUsersQueryParameters.Skip] = src.Skip.ToString();
+                    dest[GetUsersQueryParameters.Take] = src.Take.ToString();
                 });
         }
     }

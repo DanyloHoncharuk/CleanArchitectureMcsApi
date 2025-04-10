@@ -16,9 +16,6 @@ namespace UserService.Domain.Entities
 
         public void SetPassword(string password)
         {
-            if (string.IsNullOrWhiteSpace(password))
-                throw new ArgumentException("Password cannot be empty");
-
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
         }
 
