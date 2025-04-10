@@ -1,6 +1,6 @@
-﻿using UserService.Common;
+﻿using AuthService.Common;
 
-namespace UserService.Application.Wrappers
+namespace AuthService.Application.Wrappers
 {
     public class OperationResult<T>
     {

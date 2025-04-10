@@ -1,9 +1,10 @@
-﻿using UserService.Application.Wrappers;
-using UserService.Common;
+﻿using AuthService.Application.Wrappers;
+using AuthService.Common;
+using AuthService.Application.Exceptions;
 
-namespace UserService.Application.Common
+namespace AuthService.Application.Common
 {
-    public class BaseService
+    public abstract class BaseService
     {
         protected async Task<OperationResult<T>> HandleRequestAsync<T>(Func<Task<T>> action, string? successMessage = null)
         {
@@ -19,6 +20,10 @@ namespace UserService.Application.Common
             catch (KeyNotFoundException ex)
             {
                 return OperationResult<T>.Failure(ex.Message, ErrorCodes.NotFound);
+            }
+            catch (AuthenticationException ex)
+            {
+                return OperationResult<T>.Failure(ex.Message, ErrorCodes.AuthenticationFailed);
             }
         }
 
@@ -36,6 +41,10 @@ namespace UserService.Application.Common
             catch (KeyNotFoundException ex)
             {
                 return OperationResult<object?>.Failure(ex.Message, ErrorCodes.NotFound);
+            }
+            catch (AuthenticationException ex)
+            {
+                return OperationResult<object?>.Failure(ex.Message, ErrorCodes.AuthenticationFailed);
             }
         }
     }
