@@ -4,21 +4,20 @@ namespace UserService.Domain.Entities
 {
     public class User : BaseSoftDeletableEntity
     {
+        // Encapsulation?
+
         public Guid Id { get; private set; } = Guid.NewGuid();
-        public string Login { get; private set; }
+        public string Login { get; set; }
         public string PasswordHash { get; private set; }
-        public string? Email { get; private set; } = null;
-        public string? PhoneNumber { get; private set; } = null;
-        public string Name { get; private set; }
-        public string Surname { get; private set; }
-        public DateTime DateOfBirth {  get; private set; }
+        public string? Email { get; set; } = null;
+        public string? PhoneNumber { get; set; } = null;
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public DateTime DateOfBirth {  get; set; }
         public bool IsActive { get; private set; } = true;
 
         public void SetPassword(string password)
         {
-            if (string.IsNullOrWhiteSpace(password))
-                throw new ArgumentException("Password cannot be empty");
-
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
         }
 

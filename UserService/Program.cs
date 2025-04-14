@@ -13,7 +13,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService.Application.Services.UserService>();
 builder.Services.AddScoped<IDbContextTransactionManager, DbContextTransactionManager>();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // auto use all mapping profiles, that enherited from Profile class
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // auto use all mapping profiles, that inherited from Profile class
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
