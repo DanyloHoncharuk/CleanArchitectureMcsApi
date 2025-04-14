@@ -4,9 +4,9 @@ using AutoMapper;
 
 namespace AuthService.Application.Mappings
 {
-    public class MappingProfile : Profile
+    public class UserProfile : Profile
     {
-        public MappingProfile()
+        public UserProfile()
         {
             CreateMap<CreateUserDto, User>();
         }

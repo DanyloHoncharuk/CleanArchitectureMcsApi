@@ -17,7 +17,7 @@ namespace AuthService.Domain.Entities
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
         }
 
-        public bool VerifyPassword(string password)
+        public bool VerifyPassword(string password) // Single-Resposibility Principle isn't breaking? => PasswordService in App Layer?
         {
             return BCrypt.Net.BCrypt.Verify(password, PasswordHash);
         }

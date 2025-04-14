@@ -6,6 +6,7 @@ namespace AuthService.Application.Common
 {
     public abstract class BaseService
     {
+        // JwtService inheritance question???
         protected async Task<OperationResult<T>> HandleRequestAsync<T>(Func<Task<T>> action, string? successMessage = null)
         {
             try

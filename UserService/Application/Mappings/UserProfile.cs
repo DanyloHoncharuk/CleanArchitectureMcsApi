@@ -5,9 +5,9 @@ using UserService.Domain.Entities;
 
 namespace UserService.Application.Mappings
 {
-    public class UserMappingProfile : Profile
+    public class UserProfile : Profile
     {
-        public UserMappingProfile()
+        public UserProfile()
         {
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))

@@ -25,6 +25,8 @@ namespace AuthService.Application.Services
                 await ValidateUserUniquenessAsync(createUserDto.Username, createUserDto.Email);
 
                 var user = _mapper.Map<User>(createUserDto);
+                user.SetPassword(createUserDto.Password);
+
                 userRepository.Add(user);
                 await _dbContextTransactionManager.SaveChangesAsync();
             }, "User was created successfully.");
