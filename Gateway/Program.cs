@@ -11,8 +11,8 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
-    options.SwaggerEndpoint("https://localhost:7051/swagger/v1/swagger.json", "AuthService - 1.0");
-    options.SwaggerEndpoint("https://localhost:7035/swagger/v1/swagger.json", "UserService - 1.0");
+    options.SwaggerEndpoint("https://localhost:7051/swagger/v1/swagger.json", "AuthService");
+    options.SwaggerEndpoint("https://localhost:7035/swagger/v1/swagger.json", "UserService");
 });
 
 app.MapReverseProxy();
