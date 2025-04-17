@@ -16,6 +16,18 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 
 builder.Services.AddScoped<IDbContextTransactionManager, DbContextTransactionManager>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSwaggerGateway", policy =>
+    {
+        policy
+            .WithOrigins("https://localhost:7000")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,6 +35,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // auto use all mapping profiles, that inherited from Profile class
 
 var app = builder.Build();
+
+app.UseCors("AllowSwaggerGateway");
 
 if (app.Environment.IsDevelopment())
 {

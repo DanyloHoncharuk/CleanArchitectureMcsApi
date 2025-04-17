@@ -15,11 +15,24 @@ builder.Services.AddScoped<IDbContextTransactionManager, DbContextTransactionMan
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // auto use all mapping profiles, that inherited from Profile class
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSwaggerGateway", policy =>
+    {
+        policy
+            .WithOrigins("https://localhost:7000")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseCors("AllowSwaggerGateway");
 
 if (app.Environment.IsDevelopment())
 {
