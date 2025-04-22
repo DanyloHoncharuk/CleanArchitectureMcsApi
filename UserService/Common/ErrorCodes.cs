@@ -6,5 +6,6 @@
         public const string Validation = "VALIDATION_ERROR";
         public const string NotFound = "NOT_FOUND";
         public const string InternalServer = "INTERNAL_SERVER_ERROR";
+        public const string Unauthorized = "UNAUTHORIZED";
     }
 }
